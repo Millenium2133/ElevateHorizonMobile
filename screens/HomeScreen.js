@@ -5,6 +5,11 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
+
+      <Button 
+        title="Go to Events"
+        onPress={() => navigation.navigate('Events')}
+      />
     </View>
   );
 }
