@@ -1,23 +1,46 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, View, StyleSheet } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 
 export default function RegistrationScreen() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const register = () => {
+    Alert.alert(
+      'Success',
+      'Registration submitted successfully.'
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registration</Text>
+      <TextInput
+        label="Full Name"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+      />
+
+      <TextInput
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+      />
+
+      <Button mode="contained" onPress={register}>
+        Submit Registration
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  input: {
+    marginBottom: 15,
   },
 });
