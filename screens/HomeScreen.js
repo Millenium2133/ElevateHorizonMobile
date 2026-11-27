@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { Card, Chip, Text, useTheme } from 'react-native-paper';
+import EventCardImage from '../components/EventCardImage';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
 import { homeStyles as styles } from '../styles/screenStyles';
@@ -49,6 +50,7 @@ export default function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate('EventDetails', { event })}
           >
             <Card style={styles.eventCard}>
+              <EventCardImage event={event} />
               <Card.Content style={styles.eventContent}>
                 <View style={styles.eventHeading}>
                   <Text variant="titleMedium">{event.title}</Text>

@@ -45,6 +45,15 @@ export const eventsStyles = StyleSheet.create({
   },
 });
 
+export const eventCardImageStyles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: 96,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+});
+
 export const settingsStyles = StyleSheet.create({
   screen: {
     flex: 1,

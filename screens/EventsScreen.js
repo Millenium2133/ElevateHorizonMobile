@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import { Card, Text, useTheme } from 'react-native-paper';
+import EventCardImage from '../components/EventCardImage';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
 import { eventsStyles as styles } from '../styles/screenStyles';
@@ -24,6 +25,7 @@ export default function EventsScreen({ navigation }) {
               onPress={() => navigation.navigate('EventDetails', { event: item })}
             >
               <Card style={styles.card}>
+                <EventCardImage event={item} />
                 <Card.Content>
                   <Text variant="titleMedium">{item.title}</Text>
                   <Text>{item.date} · {item.time}</Text>
