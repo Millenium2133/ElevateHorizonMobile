@@ -1,23 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Switch, Text } from 'react-native-paper';
 
 export default function SettingsScreen() {
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
+      <Text variant="titleMedium">Dark Mode</Text>
+
+      <Switch
+        value={darkMode}
+        onValueChange={() => setDarkMode(!darkMode)}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    padding: 20,
   },
 });
