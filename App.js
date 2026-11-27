@@ -7,9 +7,11 @@ import { PaperProvider } from 'react-native-paper';
 import { lightTheme, darkTheme } from './theme';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
 import { AudioSettingsProvider } from './AudioSettingsContext';
+import { EventsProvider } from './EventsContext';
 
 import AppAudio from './components/AppAudio';
 import MainTabs from './navigation/MainTabs';
+import AccountRegistrationScreen from './screens/AccountRegistrationScreen';
 import EventDetailsScreen from './screens/EventDetailsScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 
@@ -31,6 +33,7 @@ function AppNavigation() {
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
           <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="AccountRegistration" component={AccountRegistrationScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
@@ -41,9 +44,11 @@ export default function App() {
   return (
     <ThemeProvider>
       <AudioSettingsProvider>
-        <AppAudio>
-          <AppNavigation />
-        </AppAudio>
+        <EventsProvider>
+          <AppAudio>
+            <AppNavigation />
+          </AppAudio>
+        </EventsProvider>
       </AudioSettingsProvider>
     </ThemeProvider>
   );

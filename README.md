@@ -12,6 +12,7 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 - View today's events and all events
 - Search and filter by keyword or date
 - Event details and a registration form with confirmation
+- Community member account registration
 - Settings: light/dark theme and independent background-music and tap-sound volume/on-off controls (saved between launches)
 - Loading and error states, with a Retry button
 - Portrait (mobile) and landscape (tablet) layouts
@@ -21,7 +22,7 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 - React Native (Expo), JavaScript
 - React Native Paper (UI) and React Navigation (tabs and stack)
 - AsyncStorage (saved settings)
-- fetch with async/await for event data (mock data first, then a remote JSON endpoint)
+- REST API via `fetch` (`GET /events`, `POST /registrations`, `POST /users`), configurable with `EXPO_PUBLIC_API_URL`
 - Git and GitHub
 
 ## Getting started
@@ -36,6 +37,7 @@ npx expo start
 ```
 
 Scan the QR code with Expo Go, or press `a` (Android) or `i` (iOS) to open an emulator.
+The API defaults to `https://grmobile.onrender.com`; set `EXPO_PUBLIC_API_URL` to use another backend.
 
 ## Navigation
 

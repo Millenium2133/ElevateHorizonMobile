@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { ScrollView, View } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { Card, RadioButton, Switch, Text, useTheme } from 'react-native-paper';
+import { Button, Card, RadioButton, Switch, Text, useTheme } from 'react-native-paper';
 import { AudioSettingsContext } from '../AudioSettingsContext';
 import { ThemeContext } from '../ThemeContext';
 import ScreenHeader from '../components/ScreenHeader';
 import { settingsStyles as styles } from '../styles/screenStyles';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
   const { themeMode, setThemeMode } = useContext(ThemeContext);
   const { settings, updateSettings, isReady } = useContext(AudioSettingsContext);
   const { colors } = useTheme();
@@ -119,6 +119,22 @@ export default function SettingsScreen() {
                 <Text variant="bodySmall">Loading saved audio settings...</Text>
               )}
             </View>
+          </Card.Content>
+        </Card>
+
+        <Card>
+          <Card.Content>
+            <Text variant="titleLarge">Account</Text>
+            <Text variant="bodyMedium" style={styles.accountDescription}>
+              Create an account to register for community events.
+            </Text>
+            <Button
+              accessibilityLabel="Create a community account"
+              onPress={() => navigation.navigate('AccountRegistration')}
+              mode="contained"
+            >
+              Create Account
+            </Button>
           </Card.Content>
         </Card>
       </ScrollView>

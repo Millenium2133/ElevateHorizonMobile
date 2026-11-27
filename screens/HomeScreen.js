@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { Card, Chip, Text, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Button, Card, Chip, Text, useTheme } from 'react-native-paper';
+import { EventsContext } from '../EventsContext';
 import EventCardImage from '../components/EventCardImage';
 import ScreenHeader from '../components/ScreenHeader';
-import { events } from '../data/events';
 import { homeStyles as styles } from '../styles/screenStyles';
+
+function getUpcomingEvents(events) {
+  const now = new Date();
+  return events
+    .filter((event) => {
+      const [year, month, day] = event.date.split('-').map(Number);
+      const [hours, minutes] = event.startTime.split(':').map(Number);
+      const startsAt = new Date(year, month - 1, day, hours, minutes);
+      return !event.isCancelled && startsAt >= now;
+    })
+    .slice(0, 3);
+}
 
 export default function HomeScreen({ navigation }) {
   const { colors } = useTheme();
+  const { events, isLoading, error, refreshEvents } = useContext(EventsContext);
+  const upcomingEvents = getUpcomingEvents(events);
 
   return (
     <>
@@ -41,11 +55,34 @@ export default function HomeScreen({ navigation }) {
           </Text>
         </View>
 
-        {events.map((event) => (
+        {isLoading && events.length === 0 && (
+          <ActivityIndicator accessibilityLabel="Loading upcoming events" />
+        )}
+
+        {error && (
+          <View style={styles.status}>
+            <Text accessibilityRole="alert" style={{ color: colors.error }}>
+              Couldn’t load events: {error.message}
+            </Text>
+            <Button
+              accessibilityLabel="Retry loading events"
+              disabled={isLoading}
+              onPress={refreshEvents}
+            >
+              Retry
+            </Button>
+          </View>
+        )}
+
+        {!isLoading && !error && upcomingEvents.length === 0 && (
+          <Text variant="bodyLarge">There are no upcoming events.</Text>
+        )}
+
+        {upcomingEvents.map((event) => (
           <Pressable
             key={event.id}
             accessibilityRole="button"
-            accessibilityLabel={`${event.title}, ${event.date} at ${event.location}`}
+            accessibilityLabel={`${event.title}, ${event.displayDate} at ${event.location}`}
             accessibilityHint="Opens event details"
             onPress={() => navigation.navigate('EventDetails', { event })}
           >
@@ -56,7 +93,9 @@ export default function HomeScreen({ navigation }) {
                   <Text variant="titleMedium">{event.title}</Text>
                   <Chip compact>{event.category}</Chip>
                 </View>
-                <Text variant="bodyMedium">{event.date} · {event.time}</Text>
+                <Text variant="bodyMedium">
+                  {event.displayDate} · {event.displayTime}
+                </Text>
                 <Text variant="bodyMedium">{event.location}</Text>
                 <Text variant="bodySmall">
                   {event.spotsRemaining} spots remaining

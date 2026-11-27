@@ -13,8 +13,8 @@ export default function EventDetailsScreen({ route, navigation }) {
       <ScreenHeader title="Event Details" navigation={navigation} showBack />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text variant="headlineMedium">{event.title}</Text>
-        <Text>Date: {event.date}</Text>
-        <Text>Time: {event.time}</Text>
+        <Text>Date: {event.displayDate ?? event.date}</Text>
+        <Text>Time: {event.displayTime ?? event.time}</Text>
         <Text>Location: {event.location}</Text>
         <Text>Category: {event.category}</Text>
         <Text>Spots Remaining: {event.spotsRemaining}</Text>

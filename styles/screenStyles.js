@@ -31,6 +31,11 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  status: {
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 16,
+  },
 });
 
 export const eventsStyles = StyleSheet.create({
@@ -42,6 +47,11 @@ export const eventsStyles = StyleSheet.create({
   },
   card: {
     marginBottom: 12,
+  },
+  status: {
+    alignItems: 'center',
+    gap: 8,
+    padding: 16,
   },
 });
 
@@ -74,6 +84,9 @@ export const settingsStyles = StyleSheet.create({
     flex: 1,
     marginRight: 12,
   },
+  accountDescription: {
+    marginVertical: 12,
+  },
   volumeLabel: {
     marginTop: 8,
   },
@@ -101,6 +114,19 @@ export const registrationStyles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+  },
+});
+
+export const accountRegistrationStyles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  container: {
+    padding: 20,
+    gap: 12,
+  },
+  input: {
+    marginTop: 4,
   },
 });
 
