@@ -1,11 +1,15 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useContext } from 'react';
+import { Alert, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
+import { EventsContext } from '../EventsContext';
 import ScreenHeader from '../components/ScreenHeader';
 import { eventDetailsStyles as styles } from '../styles/screenStyles';
 
 export default function EventDetailsScreen({ route, navigation }) {
-  const { event } = route.params;
+  const { event: routeEvent } = route.params;
+  const { events } = useContext(EventsContext);
+  const event = events.find((item) => String(item.id) === String(routeEvent.id)) ?? routeEvent;
+  const isFull = event.spotsRemaining <= 0;
   const { colors } = useTheme();
 
   return (
@@ -19,14 +23,25 @@ export default function EventDetailsScreen({ route, navigation }) {
         <Text>Location: {event.location}</Text>
         <Text>Category: {event.category}</Text>
         <Text>Spots Remaining: {event.spotsRemaining}</Text>
+        {isFull && (
+          <Text accessibilityRole="alert" style={{ color: colors.error }}>
+            This event is full and no longer accepting registrations.
+          </Text>
+        )}
         <Text style={styles.description}>{event.description}</Text>
         <Button
-          accessibilityLabel={`Register for ${event.title}`}
-          accessibilityHint="Opens the event registration form"
+          accessibilityLabel={isFull ? `${event.title} is full` : `Register for ${event.title}`}
+          accessibilityHint={isFull ? 'Shows that this event is full' : 'Opens the event registration form'}
           mode="contained"
-          onPress={() => navigation.navigate('Registration', { event })}
+          onPress={() => {
+            if (isFull) {
+              Alert.alert('Event full', `${event.title} is full and no longer accepting registrations.`);
+              return;
+            }
+            navigation.navigate('Registration', { event });
+          }}
         >
-          Register
+          {isFull ? 'Event Full' : 'Register'}
         </Button>
       </View>
     </>

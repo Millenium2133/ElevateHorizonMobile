@@ -24,6 +24,9 @@ export const homeStyles = StyleSheet.create({
   eventCard: {
     marginBottom: 4,
   },
+  fullEventCard: {
+    opacity: 0.5,
+  },
   eventContent: {
     gap: 8,
   },
@@ -55,6 +58,9 @@ export const eventsStyles = StyleSheet.create({
   },
   card: {
     marginBottom: 12,
+  },
+  fullCard: {
+    opacity: 0.5,
   },
   status: {
     alignItems: 'center',

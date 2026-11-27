@@ -2,13 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Button, Text, TextInput, useTheme } from 'react-native-paper';
 import { AccountContext } from '../AccountContext';
+import { EventsContext } from '../EventsContext';
 import { createRegistration } from '../services/apiClient';
 import ScreenHeader from '../components/ScreenHeader';
 import { registrationStyles as styles } from '../styles/screenStyles';
 
 export default function RegistrationScreen({ route, navigation }) {
-  const { event } = route.params;
+  const { event: routeEvent } = route.params;
   const { account, isReady: accountIsReady } = useContext(AccountContext);
+  const { events } = useContext(EventsContext);
+  const event = events.find((item) => String(item.id) === String(routeEvent.id)) ?? routeEvent;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,6 +69,11 @@ export default function RegistrationScreen({ route, navigation }) {
       <ScreenHeader title="Registration" navigation={navigation} showBack />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text variant="titleMedium">Register for {event.title}</Text>
+        {event.spotsRemaining <= 0 && (
+          <Text accessibilityRole="alert" style={{ color: colors.error }}>
+            This event is full and no longer accepting registrations.
+          </Text>
+        )}
         {!accountIsReady ? (
           <Text variant="bodySmall">Loading saved account details...</Text>
         ) : account ? (

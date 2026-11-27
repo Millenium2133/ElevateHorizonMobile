@@ -10,6 +10,7 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 ## Features
 
 - View today's events and all events
+- Refresh event availability every minute and mark full events as unavailable
 - Search and filter by keyword or date
 - Event details and a registration form with confirmation
 - Community member account registration with profile details saved on the device and prefilled into event signups

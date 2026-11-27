@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { Alert, FlatList, Pressable, View } from 'react-native';
 import { ActivityIndicator, Button, Card, Text, useTheme } from 'react-native-paper';
 import { EventsContext } from '../EventsContext';
 import EventCardImage from '../components/EventCardImage';
@@ -57,23 +57,34 @@ export default function EventsScreen({ navigation }) {
               </Button>
             </View>
           ) : null}
-          renderItem={({ item }) => (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={`${item.title}, ${item.displayDate} at ${item.location}`}
-              accessibilityHint="Opens event details"
-              onPress={() => navigation.navigate('EventDetails', { event: item })}
-            >
-              <Card style={styles.card}>
-                <EventCardImage event={item} />
-                <Card.Content>
-                  <Text variant="titleMedium">{item.title}</Text>
-                  <Text>{item.displayDate} · {item.displayTime}</Text>
-                  <Text>{item.location}</Text>
-                </Card.Content>
-              </Card>
-            </Pressable>
-          )}
+          renderItem={({ item }) => {
+            const isFull = item.spotsRemaining <= 0;
+
+            return (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`${item.title}${isFull ? ', full' : ''}, ${item.displayDate} at ${item.location}`}
+                accessibilityHint={isFull ? 'Shows that this event is full' : 'Opens event details'}
+                onPress={() => {
+                  if (isFull) {
+                    Alert.alert('Event full', `${item.title} is full and no longer accepting registrations.`);
+                    return;
+                  }
+                  navigation.navigate('EventDetails', { event: item });
+                }}
+              >
+                <Card style={[styles.card, isFull && styles.fullCard]}>
+                  <EventCardImage event={item} />
+                  <Card.Content>
+                    <Text variant="titleMedium">{item.title}</Text>
+                    <Text>{item.displayDate} · {item.displayTime}</Text>
+                    <Text>{item.location}</Text>
+                    <Text>{item.spotsRemaining} spots remaining</Text>
+                  </Card.Content>
+                </Card>
+              </Pressable>
+            );
+          }}
         />
       </View>
     </>

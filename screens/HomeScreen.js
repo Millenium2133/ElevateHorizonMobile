@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { ActivityIndicator, Button, Card, Chip, Text, useTheme } from 'react-native-paper';
 import { EventsContext } from '../EventsContext';
 import EventCardImage from '../components/EventCardImage';
@@ -80,36 +80,46 @@ export default function HomeScreen({ navigation }) {
           <Text variant="bodyLarge">There are no upcoming events.</Text>
         )}
 
-        {upcomingEvents.map((event) => (
-          <Pressable
-            key={event.id}
-            accessibilityRole="button"
-            accessibilityLabel={`${event.title}, ${event.displayDate} at ${event.location}`}
-            accessibilityHint="Opens event details"
-            onPress={() => navigation.navigate('EventDetails', { event })}
-          >
-            <Card style={styles.eventCard}>
-              <EventCardImage event={event} />
-              <Card.Content style={styles.eventContent}>
-                <View style={styles.eventHeading}>
-                  <Text variant="titleMedium" style={styles.eventTitle}>
-                    {event.title}
+        {upcomingEvents.map((event) => {
+          const isFull = event.spotsRemaining <= 0;
+
+          return (
+            <Pressable
+              key={event.id}
+              accessibilityRole="button"
+              accessibilityLabel={`${event.title}${isFull ? ', full' : ''}, ${event.displayDate} at ${event.location}`}
+              accessibilityHint={isFull ? 'Shows that this event is full' : 'Opens event details'}
+              onPress={() => {
+                if (isFull) {
+                  Alert.alert('Event full', `${event.title} is full and no longer accepting registrations.`);
+                  return;
+                }
+                navigation.navigate('EventDetails', { event });
+              }}
+            >
+              <Card style={[styles.eventCard, isFull && styles.fullEventCard]}>
+                <EventCardImage event={event} />
+                <Card.Content style={styles.eventContent}>
+                  <View style={styles.eventHeading}>
+                    <Text variant="titleMedium" style={styles.eventTitle}>
+                      {event.title}
+                    </Text>
+                    <Chip compact style={styles.eventCategory}>
+                      {event.category}
+                    </Chip>
+                  </View>
+                  <Text variant="bodyMedium">
+                    {event.displayDate} · {event.displayTime}
                   </Text>
-                  <Chip compact style={styles.eventCategory}>
-                    {event.category}
-                  </Chip>
-                </View>
-                <Text variant="bodyMedium">
-                  {event.displayDate} · {event.displayTime}
-                </Text>
-                <Text variant="bodyMedium">{event.location}</Text>
-                <Text variant="bodySmall">
-                  {event.spotsRemaining} spots remaining
-                </Text>
-              </Card.Content>
-            </Card>
-          </Pressable>
-        ))}
+                  <Text variant="bodyMedium">{event.location}</Text>
+                  <Text variant="bodySmall">
+                    {event.spotsRemaining} spots remaining
+                  </Text>
+                </Card.Content>
+              </Card>
+            </Pressable>
+          );
+        })}
       </ScrollView>
     </>
   );
