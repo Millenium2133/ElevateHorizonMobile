@@ -30,9 +30,10 @@ export default function EventsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 16,
+    paddingTop: 24,
   },
   card: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
 });

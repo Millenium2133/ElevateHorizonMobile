@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Switch, Text } from 'react-native-paper';
+import { RadioButton, Text, Card } from 'react-native-paper';
+import { ThemeContext } from '../ThemeContext';
 
 export default function SettingsScreen() {
-  const [darkMode, setDarkMode] = useState(false);
+  const {
+    themeMode,
+    setThemeMode,
+  } = useContext(ThemeContext);
 
   return (
     <View style={styles.container}>
-      <Text variant="titleMedium">Dark Mode</Text>
+      <Card>
+        <Card.Content>
+          <Text variant="titleLarge">
+            Theme
+          </Text>
 
-      <Switch
-        value={darkMode}
-        onValueChange={() => setDarkMode(!darkMode)}
-      />
+          <RadioButton.Group
+            onValueChange={setThemeMode}
+            value={themeMode}
+          >
+            <RadioButton.Item
+              label="System"
+              value="system"
+            />
+
+            <RadioButton.Item
+              label="Light"
+              value="light"
+            />
+
+            <RadioButton.Item
+              label="Dark"
+              value="dark"
+            />
+          </RadioButton.Group>
+        </Card.Content>
+      </Card>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    padding: 16,
   },
 });

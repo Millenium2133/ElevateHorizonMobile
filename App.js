@@ -1,30 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useContext } from 'react';
 import { useColorScheme } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { PaperProvider } from 'react-native-paper';
+import { ThemeProvider, ThemeContext } from './ThemeContext';
 import { lightTheme, darkTheme } from './theme';
 
-import MainTabs from './navigation/MainTabs';
-import EventDetailsScreen from './screens/EventDetailsScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
+function AppContent() {
+  const systemTheme = useColorScheme();
+  const { themeMode } = useContext(ThemeContext);
 
-const Stack = createNativeStackNavigator();
+  let currentTheme;
 
-export default function App() {
-  const colorScheme = useColorScheme();
-  const activeTheme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  if (themeMode === 'light') {
+    currentTheme = lightTheme;
+  } else if (themeMode === 'dark') {
+    currentTheme = darkTheme;
+  } else {
+    currentTheme =
+      systemTheme === 'dark'
+        ? darkTheme
+        : lightTheme;
+  }
 
   return (
-    <PaperProvider theme={activeTheme}>
-      <NavigationContainer theme={activeTheme}>
-        <StatusBar style="auto" />
-        <Stack.Navigator>
-          <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
-        </Stack.Navigator>
+    <PaperProvider theme={currentTheme}>
+      <NavigationContainer theme={currentTheme}>
+        {/* Navigator */}
       </NavigationContainer>
     </PaperProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
