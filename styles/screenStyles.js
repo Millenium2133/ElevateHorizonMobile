@@ -53,6 +53,16 @@ export const eventsStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  filters: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    gap: 8,
+  },
+  categoryFilters: {
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 4,
+  },
   list: {
     padding: 16,
   },
