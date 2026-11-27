@@ -30,8 +30,23 @@ const eventImages = {
 };
 
 const aliases = {
+  crafting: ['pottery'],
   salsadance: ['salsadancing'],
   wineandcheesetasting: ['winecheesetasting'],
+};
+
+const categoryFallbacks = {
+  arts: 'digitalart',
+  community: 'communityservice',
+  dance: 'salsadance',
+  educational: 'sciencefair',
+  entertainment: 'movienight',
+  fitness: 'workout',
+  games: 'boardgame',
+  music: 'music',
+  outdoor: 'hiking',
+  social: 'wineandcheesetasting',
+  wellness: 'yoga',
 };
 
 const imageKeys = Object.keys(eventImages).sort((left, right) => right.length - left.length);
@@ -46,5 +61,6 @@ export function getEventImage(event) {
     [key, ...(aliases[key] ?? [])].some((keyword) => title.includes(keyword))
   );
 
-  return imageKey ? eventImages[imageKey] : null;
+  const fallbackKey = categoryFallbacks[normalize(event?.category)] ?? 'communityservice';
+  return eventImages[imageKey ?? fallbackKey];
 }

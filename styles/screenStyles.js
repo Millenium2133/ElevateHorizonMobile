@@ -29,7 +29,14 @@ export const homeStyles = StyleSheet.create({
   eventHeading: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 8,
+  },
+  eventTitle: {
+    flex: 1,
+    minWidth: 0,
+  },
+  eventCategory: {
+    flexShrink: 0,
   },
   status: {
     alignItems: 'center',

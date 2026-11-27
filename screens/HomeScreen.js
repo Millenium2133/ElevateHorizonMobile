@@ -90,8 +90,12 @@ export default function HomeScreen({ navigation }) {
               <EventCardImage event={event} />
               <Card.Content style={styles.eventContent}>
                 <View style={styles.eventHeading}>
-                  <Text variant="titleMedium">{event.title}</Text>
-                  <Chip compact>{event.category}</Chip>
+                  <Text variant="titleMedium" style={styles.eventTitle}>
+                    {event.title}
+                  </Text>
+                  <Chip compact style={styles.eventCategory}>
+                    {event.category}
+                  </Chip>
                 </View>
                 <Text variant="bodyMedium">
                   {event.displayDate} · {event.displayTime}
