@@ -21,7 +21,7 @@ export const lightTheme = {
     onError: '#fff7f6',
     errorContainer: '#fe4e44',
     onErrorContainer: '#570003',
-    background: '#f6faff',
+    background: '#3CA6E5',
     onBackground: '#2e3337',
     surface: '#f6faff',
     onSurface: '#2e3337',
