@@ -26,6 +26,9 @@ export default function MainTabs() {
           style={navigationStyles.bottomBar}
           activeColor="#FFFFFF"
           inactiveColor="#D7DAE0"
+          getAccessibilityLabel={({ route }) =>
+            descriptors[route.key].options.tabBarAccessibilityLabel ?? route.name
+          }
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -52,11 +55,20 @@ export default function MainTabs() {
       )}
     >
       <Tab.Screen name="Home" component={HomeScreen}
-        options={{ tabBarIcon: icon('home', 'home-outline') }} />
+        options={{
+          tabBarAccessibilityLabel: 'Home tab',
+          tabBarIcon: icon('home', 'home-outline'),
+        }} />
       <Tab.Screen name="Events" component={EventsScreen}
-        options={{ tabBarIcon: icon('calendar', 'calendar-outline') }} />
+        options={{
+          tabBarAccessibilityLabel: 'Events tab',
+          tabBarIcon: icon('calendar', 'calendar-outline'),
+        }} />
       <Tab.Screen name="Settings" component={SettingsScreen}
-        options={{ tabBarIcon: icon('cog', 'cog-outline') }} />
+        options={{
+          tabBarAccessibilityLabel: 'Settings tab',
+          tabBarIcon: icon('cog', 'cog-outline'),
+        }} />
     </Tab.Navigator>
   );
 }

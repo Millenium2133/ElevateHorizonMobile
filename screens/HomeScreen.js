@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { Card, Chip, Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
@@ -32,6 +32,8 @@ export default function HomeScreen({ navigation }) {
           <Text
             variant="labelLarge"
             accessibilityRole="button"
+            accessibilityLabel="View all community events"
+            accessibilityHint="Opens the community events list"
             onPress={() => navigation.navigate('Events')}
           >
             View all
@@ -39,24 +41,27 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         {events.map((event) => (
-          <Card
+          <Pressable
             key={event.id}
-            style={styles.eventCard}
-            onPress={() => navigation.navigate('EventDetails', { event })}
+            accessibilityRole="button"
             accessibilityLabel={`${event.title}, ${event.date} at ${event.location}`}
+            accessibilityHint="Opens event details"
+            onPress={() => navigation.navigate('EventDetails', { event })}
           >
-            <Card.Content style={styles.eventContent}>
-              <View style={styles.eventHeading}>
-                <Text variant="titleMedium">{event.title}</Text>
-                <Chip compact>{event.category}</Chip>
-              </View>
-              <Text variant="bodyMedium">{event.date} · {event.time}</Text>
-              <Text variant="bodyMedium">{event.location}</Text>
-              <Text variant="bodySmall">
-                {event.spotsRemaining} spots remaining
-              </Text>
-            </Card.Content>
-          </Card>
+            <Card style={styles.eventCard}>
+              <Card.Content style={styles.eventContent}>
+                <View style={styles.eventHeading}>
+                  <Text variant="titleMedium">{event.title}</Text>
+                  <Chip compact>{event.category}</Chip>
+                </View>
+                <Text variant="bodyMedium">{event.date} · {event.time}</Text>
+                <Text variant="bodyMedium">{event.location}</Text>
+                <Text variant="bodySmall">
+                  {event.spotsRemaining} spots remaining
+                </Text>
+              </Card.Content>
+            </Card>
+          </Pressable>
         ))}
       </ScrollView>
     </>

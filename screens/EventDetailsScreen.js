@@ -20,6 +20,8 @@ export default function EventDetailsScreen({ route, navigation }) {
         <Text>Spots Remaining: {event.spotsRemaining}</Text>
         <Text style={styles.description}>{event.description}</Text>
         <Button
+          accessibilityLabel={`Register for ${event.title}`}
+          accessibilityHint="Opens the event registration form"
           mode="contained"
           onPress={() => navigation.navigate('Registration', { event })}
         >

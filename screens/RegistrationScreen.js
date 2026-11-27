@@ -21,18 +21,27 @@ export default function RegistrationScreen({ navigation }) {
       <ScreenHeader title="Registration" navigation={navigation} showBack />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <TextInput
+          accessibilityLabel="Full name"
+          accessibilityHint="Enter the name for this event registration"
           label="Full Name"
           value={name}
           onChangeText={setName}
           style={styles.input}
         />
         <TextInput
+          accessibilityLabel="Email address"
+          accessibilityHint="Enter your email address"
           label="Email"
           value={email}
           onChangeText={setEmail}
           style={styles.input}
         />
-        <Button mode="contained" onPress={register}>
+        <Button
+          accessibilityLabel="Submit registration"
+          accessibilityHint="Submits your event registration"
+          mode="contained"
+          onPress={register}
+        >
           Submit Registration
         </Button>
       </View>

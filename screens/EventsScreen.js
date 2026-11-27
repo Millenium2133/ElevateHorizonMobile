@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, Pressable, View } from 'react-native';
 import { Card, Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
@@ -17,16 +17,20 @@ export default function EventsScreen({ navigation }) {
           data={events}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Card
-              style={styles.card}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${item.title}, ${item.date} at ${item.location}`}
+              accessibilityHint="Opens event details"
               onPress={() => navigation.navigate('EventDetails', { event: item })}
             >
-              <Card.Content>
-                <Text variant="titleMedium">{item.title}</Text>
-                <Text>{item.date} · {item.time}</Text>
-                <Text>{item.location}</Text>
-              </Card.Content>
-            </Card>
+              <Card style={styles.card}>
+                <Card.Content>
+                  <Text variant="titleMedium">{item.title}</Text>
+                  <Text>{item.date} · {item.time}</Text>
+                  <Text>{item.location}</Text>
+                </Card.Content>
+              </Card>
+            </Pressable>
           )}
         />
       </View>

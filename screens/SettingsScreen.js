@@ -23,9 +23,21 @@ export default function SettingsScreen() {
           <Card.Content>
             <Text variant="titleLarge">Theme</Text>
             <RadioButton.Group onValueChange={setThemeMode} value={themeMode}>
-              <RadioButton.Item label="System" value="system" />
-              <RadioButton.Item label="Light" value="light" />
-              <RadioButton.Item label="Dark" value="dark" />
+              <RadioButton.Item
+                accessibilityLabel="System theme"
+                label="System"
+                value="system"
+              />
+              <RadioButton.Item
+                accessibilityLabel="Light theme"
+                label="Light"
+                value="light"
+              />
+              <RadioButton.Item
+                accessibilityLabel="Dark theme"
+                label="Dark"
+                value="dark"
+              />
             </RadioButton.Group>
           </Card.Content>
         </Card>
@@ -42,6 +54,7 @@ export default function SettingsScreen() {
                 </View>
                 <Switch
                   accessibilityLabel="Enable background music"
+                  accessibilityHint="Turns background music on or off"
                   disabled={!isReady}
                   value={settings.musicEnabled}
                   onValueChange={(musicEnabled) => updateSettings({ musicEnabled })}
@@ -52,7 +65,8 @@ export default function SettingsScreen() {
               </Text>
               {isReady ? (
                 <Slider
-                  accessibilityLabel="Background music volume"
+                  accessibilityLabel={`Background music volume, ${Math.round(settings.musicVolume * 100)} percent`}
+                  accessibilityHint="Adjusts the background music volume"
                   disabled={!settings.musicEnabled}
                   maximumTrackTintColor={colors.outlineVariant}
                   maximumValue={1}
@@ -77,6 +91,7 @@ export default function SettingsScreen() {
                 </View>
                 <Switch
                   accessibilityLabel="Enable tap sounds"
+                  accessibilityHint="Turns tap sounds on or off"
                   disabled={!isReady}
                   value={settings.tapEnabled}
                   onValueChange={(tapEnabled) => updateSettings({ tapEnabled })}
@@ -87,7 +102,8 @@ export default function SettingsScreen() {
               </Text>
               {isReady ? (
                 <Slider
-                  accessibilityLabel="Tap sound volume"
+                  accessibilityLabel={`Tap sound volume, ${Math.round(settings.tapVolume * 100)} percent`}
+                  accessibilityHint="Adjusts the tap sound volume"
                   disabled={!settings.tapEnabled}
                   maximumTrackTintColor={colors.outlineVariant}
                   maximumValue={1}
