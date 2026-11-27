@@ -1,38 +1,52 @@
 import React from 'react';
-import { FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { Appbar, Card, Text } from 'react-native-paper';
 import { events } from '../data/events';
 
 export default function EventsScreen({ navigation }) {
   return (
-    <FlatList
-      data={events}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('EventDetails', { event: item })
-          }
-        >
-          <Card style={styles.card}>
+    <View style={styles.container}>
+      <Appbar.Header>
+        <Appbar.Content title="Community Events" />
+      </Appbar.Header>
+
+      <FlatList
+        contentContainerStyle={styles.list}
+        data={events}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate('EventDetails', {
+                event: item,
+              })
+            }
+          >
             <Card.Content>
-              <Text variant="titleMedium">{item.title}</Text>
+              <Text variant="titleMedium">
+                {item.title}
+              </Text>
+
               <Text>{item.date}</Text>
               <Text>{item.location}</Text>
             </Card.Content>
           </Card>
-        </TouchableOpacity>
-      )}
-    />
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    paddingTop: 24,
+    flex: 1,
   },
+
+  list: {
+    padding: 16,
+  },
+
   card: {
     marginBottom: 12,
   },
