@@ -6,12 +6,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
 import { lightTheme, darkTheme } from './theme';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
+import { AccountProvider } from './AccountContext';
 import { AudioSettingsProvider } from './AudioSettingsContext';
 import { EventsProvider } from './EventsContext';
 
 import AppAudio from './components/AppAudio';
 import MainTabs from './navigation/MainTabs';
 import AccountRegistrationScreen from './screens/AccountRegistrationScreen';
+import AccountScreen from './screens/AccountScreen';
 import EventDetailsScreen from './screens/EventDetailsScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 
@@ -35,6 +37,7 @@ function AppNavigation() {
           <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
           <Stack.Screen name="AccountRegistration" component={AccountRegistrationScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
@@ -45,13 +48,15 @@ export default function App() {
   // Keep app-wide state and audio mounted above navigation so every screen can use them.
   return (
     <ThemeProvider>
-      <AudioSettingsProvider>
-        <EventsProvider>
-          <AppAudio>
-            <AppNavigation />
-          </AppAudio>
-        </EventsProvider>
-      </AudioSettingsProvider>
+      <AccountProvider>
+        <AudioSettingsProvider>
+          <EventsProvider>
+            <AppAudio>
+              <AppNavigation />
+            </AppAudio>
+          </EventsProvider>
+        </AudioSettingsProvider>
+      </AccountProvider>
     </ThemeProvider>
   );
 }

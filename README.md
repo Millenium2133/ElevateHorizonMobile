@@ -12,7 +12,8 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 - View today's events and all events
 - Search and filter by keyword or date
 - Event details and a registration form with confirmation
-- Community member account registration
+- Community member account registration with profile details saved on the device and prefilled into event signups
+- Account page for saved profile details; registration viewing/cancellation awaits account-specific backend endpoints
 - Settings: light/dark theme and independent background-music and tap-sound volume/on-off controls (saved between launches)
 - Loading and error states, with a Retry button
 - Portrait (mobile) and landscape (tablet) layouts
@@ -21,7 +22,7 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 
 - React Native (Expo), JavaScript
 - React Native Paper (UI) and React Navigation (tabs and stack)
-- AsyncStorage (saved settings)
+- AsyncStorage (saved settings and account profile)
 - REST API via `fetch` (`GET /events`, `POST /registrations`, `POST /users`), configurable with `EXPO_PUBLIC_API_URL`
 - Git and GitHub
 
@@ -41,7 +42,7 @@ The API defaults to `https://grmobile.onrender.com`; set `EXPO_PUBLIC_API_URL` t
 
 ## Navigation
 
-A bottom tab bar holds **Home**, **Events** and **Settings**. Tapping an event opens **Event Details**, which has a Register button that opens the **Registration** form.
+A bottom tab bar holds **Home**, **Events** and **Settings**. Tapping an event opens **Event Details**, which has a Register button that opens the **Registration** form. The account name in Settings opens **Account**; saved account details prefill event registrations.
 
 ## Accessibility
 

@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Button, Text, TextInput, useTheme } from 'react-native-paper';
+import { AccountContext } from '../AccountContext';
 import { createRegistration } from '../services/apiClient';
 import ScreenHeader from '../components/ScreenHeader';
 import { registrationStyles as styles } from '../styles/screenStyles';
 
 export default function RegistrationScreen({ route, navigation }) {
   const { event } = route.params;
+  const { account, isReady: accountIsReady } = useContext(AccountContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { colors } = useTheme();
+
+  useEffect(() => {
+    if (!accountIsReady || !account) return;
+    setName(account.name);
+    setEmail(account.email);
+  }, [account, accountIsReady]);
 
   const register = async () => {
     // Ignore surrounding whitespace so it cannot satisfy required-field checks.
@@ -35,14 +43,11 @@ export default function RegistrationScreen({ route, navigation }) {
     setError(null);
     setIsSubmitting(true);
     try {
-      // The API expects registrant details nested inside the contact field.
+      // The MVP endpoint requires name and email at the top level of the request.
       await createRegistration({
         eventId: event.id,
-        contact: {
-          name: trimmedName,
-          email: trimmedEmail,
-          phone: '',
-        },
+        name: trimmedName,
+        email: trimmedEmail,
       });
       Alert.alert(
         'Registration submitted',
@@ -61,6 +66,11 @@ export default function RegistrationScreen({ route, navigation }) {
       <ScreenHeader title="Registration" navigation={navigation} showBack />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text variant="titleMedium">Register for {event.title}</Text>
+        {!accountIsReady ? (
+          <Text variant="bodySmall">Loading saved account details...</Text>
+        ) : account ? (
+          <Text variant="bodySmall">Saved account details are filled in; you can edit them.</Text>
+        ) : null}
         {error && (
           <Text accessibilityRole="alert" style={{ color: colors.error }}>
             {error}
@@ -69,6 +79,7 @@ export default function RegistrationScreen({ route, navigation }) {
         <TextInput
           accessibilityLabel="Full name"
           accessibilityHint="Enter the name for this event registration"
+          disabled={!accountIsReady}
           label="Full Name"
           value={name}
           onChangeText={setName}
@@ -78,6 +89,7 @@ export default function RegistrationScreen({ route, navigation }) {
           accessibilityLabel="Email address"
           accessibilityHint="Enter your email address"
           label="Email"
+          disabled={!accountIsReady}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -90,7 +102,7 @@ export default function RegistrationScreen({ route, navigation }) {
           accessibilityHint="Submits your event registration"
           mode="contained"
           loading={isSubmitting}
-          disabled={isSubmitting || event.isCancelled || event.spotsRemaining <= 0}
+          disabled={!accountIsReady || isSubmitting || event.isCancelled || event.spotsRemaining <= 0}
           onPress={register}
         >
           Submit Registration

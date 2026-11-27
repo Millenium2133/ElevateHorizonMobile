@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 import { Button, Text, TextInput, useTheme } from 'react-native-paper';
+import { AccountContext } from '../AccountContext';
 import { createUser } from '../services/apiClient';
 import ScreenHeader from '../components/ScreenHeader';
 import { accountRegistrationStyles as styles } from '../styles/screenStyles';
 
 export default function AccountRegistrationScreen({ navigation }) {
+  const { saveAccount } = useContext(AccountContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [serverCreatedProfile, setServerCreatedProfile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { colors } = useTheme();
 
   const register = async () => {
     // Trim user input before validating and sending it to the API.
-    const trimmedName = name.trim();
-    const trimmedEmail = email.trim();
+    const profile = serverCreatedProfile ?? {
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+    };
 
-    if (!trimmedName) {
+    if (!profile.name) {
       setError('Enter your full name.');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)) {
       setError('Enter a valid email address.');
       return;
     }
@@ -30,12 +36,20 @@ export default function AccountRegistrationScreen({ navigation }) {
     setError(null);
     setIsSubmitting(true);
     try {
-      // The backend assigns account roles; the client only submits contact details.
-      await createUser({
-        name: trimmedName,
-        email: trimmedEmail,
-        phone: phone.trim(),
-      });
+      if (!serverCreatedProfile) {
+        // The backend assigns account roles; the client only submits contact details.
+        await createUser(profile);
+        setServerCreatedProfile(profile);
+      }
+
+      try {
+        await saveAccount(profile);
+      } catch (storageError) {
+        console.error('Account created, but could not be saved on this device.', storageError);
+        setError('Account created, but it could not be saved on this device. Try saving again.');
+        return;
+      }
+
       Alert.alert(
         'Account created',
         'Your community member account has been created.',
@@ -68,6 +82,7 @@ export default function AccountRegistrationScreen({ navigation }) {
           accessibilityLabel="Full name"
           accessibilityHint="Enter your name"
           autoComplete="name"
+          disabled={isSubmitting || Boolean(serverCreatedProfile)}
           label="Full Name"
           value={name}
           onChangeText={setName}
@@ -79,6 +94,7 @@ export default function AccountRegistrationScreen({ navigation }) {
           autoCapitalize="none"
           autoComplete="email"
           keyboardType="email-address"
+          disabled={isSubmitting || Boolean(serverCreatedProfile)}
           label="Email"
           value={email}
           onChangeText={setEmail}
@@ -88,6 +104,7 @@ export default function AccountRegistrationScreen({ navigation }) {
           accessibilityLabel="Phone number (optional)"
           accessibilityHint="Enter a phone number, or leave this blank"
           autoComplete="tel"
+          disabled={isSubmitting || Boolean(serverCreatedProfile)}
           keyboardType="phone-pad"
           label="Phone (optional)"
           value={phone}
@@ -95,14 +112,16 @@ export default function AccountRegistrationScreen({ navigation }) {
           style={styles.input}
         />
         <Button
-          accessibilityLabel="Create community account"
-          accessibilityHint="Submits your account details"
+          accessibilityLabel={serverCreatedProfile ? 'Save account on this device' : 'Create community account'}
+          accessibilityHint={serverCreatedProfile
+            ? 'Saves the already-created account on this device'
+            : 'Submits your account details'}
           mode="contained"
           loading={isSubmitting}
           disabled={isSubmitting}
           onPress={register}
         >
-          Create Account
+          {serverCreatedProfile ? 'Retry Saving Account' : 'Create Account'}
         </Button>
       </ScrollView>
     </>

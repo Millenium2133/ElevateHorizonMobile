@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import { ScrollView, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Button, Card, RadioButton, Switch, Text, useTheme } from 'react-native-paper';
+import { AccountContext } from '../AccountContext';
 import { AudioSettingsContext } from '../AudioSettingsContext';
 import { ThemeContext } from '../ThemeContext';
 import ScreenHeader from '../components/ScreenHeader';
 import { settingsStyles as styles } from '../styles/screenStyles';
 
 export default function SettingsScreen({ navigation }) {
+  const { account, isReady: accountIsReady, error: accountError } = useContext(AccountContext);
   const { themeMode, setThemeMode } = useContext(ThemeContext);
   const { settings, updateSettings, isReady } = useContext(AudioSettingsContext);
   const { colors } = useTheme();
@@ -127,14 +129,23 @@ export default function SettingsScreen({ navigation }) {
           <Card.Content>
             <Text variant="titleLarge">Account</Text>
             <Text variant="bodyMedium" style={styles.accountDescription}>
-              Create an account to register for community events.
+              {account
+                ? `Saved account: ${account.name}. Event forms will use these details.`
+                : 'Create an account to register for community events.'}
             </Text>
+            {accountError && (
+              <Text accessibilityRole="alert" style={{ color: colors.error }}>
+                Could not load saved account details: {accountError.message}
+              </Text>
+            )}
             <Button
-              accessibilityLabel="Create a community account"
-              onPress={() => navigation.navigate('AccountRegistration')}
+              accessibilityLabel={account ? `Open account for ${account.name}` : 'Create a community account'}
+              accessibilityHint={account ? 'Opens account details and registration options' : 'Opens the account creation form'}
+              disabled={!accountIsReady}
+              onPress={() => navigation.navigate(account ? 'Account' : 'AccountRegistration')}
               mode="contained"
             >
-              Create Account
+              {account ? account.name : 'Create Account'}
             </Button>
           </Card.Content>
         </Card>

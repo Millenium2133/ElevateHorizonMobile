@@ -138,6 +138,19 @@ export const accountRegistrationStyles = StyleSheet.create({
   },
 });
 
+export const accountStyles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  container: {
+    padding: 16,
+    gap: 16,
+  },
+  cardContent: {
+    gap: 12,
+  },
+});
+
 export const loadingStyles = StyleSheet.create({
   container: {
     flex: 1,
