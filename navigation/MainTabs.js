@@ -6,6 +6,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import HomeScreen from '../screens/HomeScreen';
 import EventsScreen from '../screens/EventsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import { navigationStyles } from '../styles/screenStyles';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ export default function MainTabs() {
         <BottomNavigation.Bar
           navigationState={state}
           safeAreaInsets={insets}
-          style={{ backgroundColor: '#424754' }}
+          style={navigationStyles.bottomBar}
           activeColor="#FFFFFF"
           inactiveColor="#D7DAE0"
           onTabPress={({ route, preventDefault }) => {

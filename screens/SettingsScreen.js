@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { RadioButton, Text, Card, useTheme } from 'react-native-paper';
 import { ThemeContext } from '../ThemeContext';
 import ScreenHeader from '../components/ScreenHeader';
+import { settingsStyles as styles } from '../styles/screenStyles';
 
 export default function SettingsScreen() {
   const { themeMode, setThemeMode } = useContext(ThemeContext);
@@ -26,10 +27,3 @@ export default function SettingsScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

@@ -1,8 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Card, Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
+import { eventsStyles as styles } from '../styles/screenStyles';
 
 export default function EventsScreen({ navigation }) {
   const { colors } = useTheme();
@@ -32,17 +33,3 @@ export default function EventsScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  list: {
-    padding: 16,
-  },
-
-  card: {
-    marginBottom: 12,
-  },
-});

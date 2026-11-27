@@ -1,9 +1,10 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
+import { screenHeaderStyles } from '../styles/screenStyles';
 
 export default function ScreenHeader({ title, navigation, showBack = false }) {
   return (
-    <Appbar.Header mode="small" style={{ backgroundColor: '#424754' }}>
+    <Appbar.Header mode="small" style={screenHeaderStyles.header}>
       {showBack && (
         <Appbar.BackAction
           accessibilityLabel={`Go back from ${title}`}

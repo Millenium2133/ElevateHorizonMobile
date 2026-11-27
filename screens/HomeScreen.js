@@ -1,8 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Card, Chip, Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
 import { events } from '../data/events';
+import { homeStyles as styles } from '../styles/screenStyles';
 
 export default function HomeScreen({ navigation }) {
   const { colors } = useTheme();
@@ -61,36 +62,3 @@ export default function HomeScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    padding: 16,
-    gap: 16,
-  },
-  introCard: {
-    minHeight: 190,
-    justifyContent: 'center',
-  },
-  introTitle: {
-    marginBottom: 12,
-  },
-  sectionHeading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  eventCard: {
-    marginBottom: 4,
-  },
-  eventContent: {
-    gap: 8,
-  },
-  eventHeading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-});

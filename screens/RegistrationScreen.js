@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Alert, View, StyleSheet } from 'react-native';
+import { Alert, View } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
+import { registrationStyles as styles } from '../styles/screenStyles';
 
 export default function RegistrationScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -38,13 +39,3 @@ export default function RegistrationScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  input: {
-    marginBottom: 15,
-  },
-});

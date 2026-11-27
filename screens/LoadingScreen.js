@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
+import { loadingStyles as styles } from '../styles/screenStyles';
 
 export default function LoadingScreen() {
   const { colors } = useTheme();
@@ -15,11 +16,3 @@ export default function LoadingScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

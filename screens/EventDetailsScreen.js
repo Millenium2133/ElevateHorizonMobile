@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import ScreenHeader from '../components/ScreenHeader';
+import { eventDetailsStyles as styles } from '../styles/screenStyles';
 
 export default function EventDetailsScreen({ route, navigation }) {
   const { event } = route.params;
@@ -28,14 +29,3 @@ export default function EventDetailsScreen({ route, navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    gap: 10,
-  },
-  description: {
-    marginVertical: 10,
-  },
-});
