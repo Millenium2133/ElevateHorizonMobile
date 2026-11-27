@@ -7,6 +7,7 @@ export default function EventCardImage({ event }) {
   const source = getEventImage(event);
   if (!source) return null;
 
+  // The parent card already announces event details to screen readers.
   return (
     <Image
       source={source}

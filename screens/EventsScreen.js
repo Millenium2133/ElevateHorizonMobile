@@ -32,6 +32,7 @@ export default function EventsScreen({ navigation }) {
     </View>
   );
 
+  // Keep existing cards visible if refreshing fails, and show retry above them.
   return (
     <>
       <ScreenHeader title="Community Events" />

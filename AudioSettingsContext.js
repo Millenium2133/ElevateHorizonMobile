@@ -21,6 +21,7 @@ function parseSettings(value) {
     throw new Error('Stored audio settings must be an object.');
   }
 
+  // Older or partially written preferences fall back field-by-field to safe defaults.
   return {
     musicEnabled: typeof parsed.musicEnabled === 'boolean'
       ? parsed.musicEnabled
@@ -64,6 +65,7 @@ export function AudioSettingsProvider({ children }) {
   useEffect(() => {
     if (!isReady) return undefined;
 
+    // Slider callbacks fire rapidly, so wait briefly before persisting each change.
     const timeout = setTimeout(() => {
       AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(settings)).catch((error) => {
         console.error('Unable to save audio settings.', error);

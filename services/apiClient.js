@@ -1,3 +1,4 @@
+// Override this at build time to point the app at a local or staging API.
 const API_BASE_URL = (
   process.env.EXPO_PUBLIC_API_URL ?? 'https://grmobile.onrender.com'
 ).replace(/\/+$/, '');
@@ -12,6 +13,7 @@ export class ApiError extends Error {
 }
 
 async function requestJson(path, { method = 'GET', body } = {}) {
+  // Keep timeout, JSON parsing, and server-error handling consistent for every endpoint.
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   const headers = { Accept: 'application/json' };
@@ -65,6 +67,7 @@ function formatDate(date) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!match) return date;
 
+  // Format date-only values in UTC so local timezone offsets cannot change the day.
   const [, year, month, day] = match;
   return new Intl.DateTimeFormat('en-AU', {
     day: 'numeric',
@@ -98,6 +101,7 @@ function normalizeEvent(event, index) {
     throw new ApiError(`The event at position ${index + 1} has an invalid format.`);
   }
 
+  // Preserve the server fields and add display strings for the event cards and details.
   const times = [event.startTime, event.endTime]
     .filter((time) => typeof time === 'string' && time.length > 0)
     .map(formatTime);

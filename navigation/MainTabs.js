@@ -15,6 +15,7 @@ const icon = (active, inactive) => ({ focused, color, size }) => (
 );
 
 export default function MainTabs() {
+  // Adapt React Navigation's tab events and labels to the Paper bottom bar.
   return (
     <Tab.Navigator
       initialRouteName="Home"

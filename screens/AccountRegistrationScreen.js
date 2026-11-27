@@ -14,6 +14,7 @@ export default function AccountRegistrationScreen({ navigation }) {
   const { colors } = useTheme();
 
   const register = async () => {
+    // Trim user input before validating and sending it to the API.
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
 
@@ -29,6 +30,7 @@ export default function AccountRegistrationScreen({ navigation }) {
     setError(null);
     setIsSubmitting(true);
     try {
+      // The backend assigns account roles; the client only submits contact details.
       await createUser({
         name: trimmedName,
         email: trimmedEmail,

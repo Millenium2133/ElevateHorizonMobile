@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+// Shared style groups keep screen layout definitions out of the rendering components.
 export const homeStyles = StyleSheet.create({
   container: {
     flex: 1,

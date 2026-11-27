@@ -46,6 +46,7 @@ export default function SettingsScreen({ navigation }) {
           <Card.Content>
             <Text variant="titleLarge">Audio</Text>
 
+            {/* Wait for saved preferences before enabling controls that could overwrite them. */}
             <View style={styles.audioControl}>
               <View style={styles.audioToggleRow}>
                 <View style={styles.audioLabel}>

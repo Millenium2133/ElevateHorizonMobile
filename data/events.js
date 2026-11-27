@@ -1,3 +1,4 @@
+// Local sample records; current event screens load their list from the API.
 export const events = [
   {
     id: '1',

@@ -3,6 +3,7 @@ import { Appbar } from 'react-native-paper';
 import { screenHeaderStyles } from '../styles/screenStyles';
 
 export default function ScreenHeader({ title, navigation, showBack = false }) {
+  // Centralize app-bar styling and back-button behavior for stack screens.
   return (
     <Appbar.Header mode="small" style={screenHeaderStyles.header}>
       {showBack && (

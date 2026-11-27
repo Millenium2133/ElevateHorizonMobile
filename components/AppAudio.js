@@ -13,6 +13,7 @@ export default function AppAudio({ children }) {
   const touchStart = useRef(null);
   const audioModeReady = useRef(false);
   const { settings, isReady } = useContext(AudioSettingsContext);
+  // The app-state listener reads this ref without needing to be recreated for each setting change.
   const shouldPlayMusic = useRef(false);
   shouldPlayMusic.current = isReady && settings.musicEnabled && settings.musicVolume > 0;
 
@@ -92,6 +93,7 @@ export default function AppAudio({ children }) {
     touchStart.current = null;
     if (!start) return;
 
+    // Ignore drags and long presses so scrolling does not trigger tap audio.
     const moved = Math.hypot(nativeEvent.pageX - start.x, nativeEvent.pageY - start.y) > 12;
     const wasQuick = Date.now() - start.time < 500;
     if (!moved && wasQuick) playTap();

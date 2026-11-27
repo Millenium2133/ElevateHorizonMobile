@@ -12,9 +12,11 @@ function getUpcomingEvents(events) {
     .filter((event) => {
       const [year, month, day] = event.date.split('-').map(Number);
       const [hours, minutes] = event.startTime.split(':').map(Number);
+      // Build local date/time parts together so the event date is not shifted by UTC parsing.
       const startsAt = new Date(year, month - 1, day, hours, minutes);
       return !event.isCancelled && startsAt >= now;
     })
+    // Home is a preview; the Events tab provides the complete list.
     .slice(0, 3);
 }
 

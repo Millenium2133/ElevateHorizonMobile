@@ -20,6 +20,7 @@ const Stack = createNativeStackNavigator();
 function AppNavigation() {
   const colorScheme = useColorScheme();
   const { themeMode } = useContext(ThemeContext);
+  // Follow the device appearance only when the user has not chosen a theme.
   const isDark = themeMode === 'system'
     ? colorScheme === 'dark'
     : themeMode === 'dark';
@@ -41,6 +42,7 @@ function AppNavigation() {
 }
 
 export default function App() {
+  // Keep app-wide state and audio mounted above navigation so every screen can use them.
   return (
     <ThemeProvider>
       <AudioSettingsProvider>

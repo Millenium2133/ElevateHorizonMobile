@@ -14,6 +14,7 @@ export default function RegistrationScreen({ route, navigation }) {
   const { colors } = useTheme();
 
   const register = async () => {
+    // Ignore surrounding whitespace so it cannot satisfy required-field checks.
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
 
@@ -25,6 +26,7 @@ export default function RegistrationScreen({ route, navigation }) {
       setError('Enter a valid email address.');
       return;
     }
+    // Keep unavailable events from being submitted even if this handler runs directly.
     if (event.isCancelled || event.spotsRemaining <= 0) {
       setError('This event is no longer accepting registrations.');
       return;
@@ -33,6 +35,7 @@ export default function RegistrationScreen({ route, navigation }) {
     setError(null);
     setIsSubmitting(true);
     try {
+      // The API expects registrant details nested inside the contact field.
       await createRegistration({
         eventId: event.id,
         contact: {

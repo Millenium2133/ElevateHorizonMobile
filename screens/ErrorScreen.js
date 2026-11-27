@@ -7,6 +7,7 @@ import { errorStyles as styles } from '../styles/screenStyles';
 export default function ErrorScreen() {
   const { colors } = useTheme();
 
+  // Keep the error placeholder consistent with the rest of the themed screens.
   return (
     <>
       <ScreenHeader title="Error" />

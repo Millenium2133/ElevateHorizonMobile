@@ -4,6 +4,7 @@ import { getEvents } from './services/apiClient';
 export const EventsContext = createContext(null);
 
 export function EventsProvider({ children }) {
+  // Share one event list and refresh state across Home and Events screens.
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

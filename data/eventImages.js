@@ -56,6 +56,7 @@ function normalize(value) {
 }
 
 export function getEventImage(event) {
+  // Prefer a title match; category and generic fallbacks keep every event card illustrated.
   const title = normalize(event?.title);
   const imageKey = imageKeys.find((key) =>
     [key, ...(aliases[key] ?? [])].some((keyword) => title.includes(keyword))

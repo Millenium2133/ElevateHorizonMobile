@@ -1,4 +1,4 @@
-// theme.js
+// Extend React Native Paper's Material 3 defaults with app-specific light and dark palettes.
 import { MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
 
 export const lightTheme = {
