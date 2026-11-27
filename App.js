@@ -6,7 +6,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
 import { lightTheme, darkTheme } from './theme';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
+import { AudioSettingsProvider } from './AudioSettingsContext';
 
+import AppAudio from './components/AppAudio';
 import MainTabs from './navigation/MainTabs';
 import EventDetailsScreen from './screens/EventDetailsScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
@@ -38,7 +40,11 @@ function AppNavigation() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppNavigation />
+      <AudioSettingsProvider>
+        <AppAudio>
+          <AppNavigation />
+        </AppAudio>
+      </AudioSettingsProvider>
     </ThemeProvider>
   );
 }

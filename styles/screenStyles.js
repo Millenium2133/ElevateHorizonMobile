@@ -46,9 +46,31 @@ export const eventsStyles = StyleSheet.create({
 });
 
 export const settingsStyles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+  },
+  container: {
     padding: 16,
+    gap: 16,
+  },
+  audioControl: {
+    marginTop: 16,
+  },
+  audioToggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  audioLabel: {
+    flex: 1,
+    marginRight: 12,
+  },
+  volumeLabel: {
+    marginTop: 8,
+  },
+  slider: {
+    width: '100%',
+    height: 40,
   },
 });
 
@@ -98,5 +120,11 @@ export const screenHeaderStyles = StyleSheet.create({
 export const navigationStyles = StyleSheet.create({
   bottomBar: {
     backgroundColor: '#424754',
+  },
+});
+
+export const appAudioStyles = StyleSheet.create({
+  container: {
+    flex: 1,
   },
 });

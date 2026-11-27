@@ -12,7 +12,7 @@ Built for TAFE NSW Assessment Event 2 (ICTPRG436, ICTPRG437, ICTICT449).
 - View today's events and all events
 - Search and filter by keyword or date
 - Event details and a registration form with confirmation
-- Settings: text size, light/dark theme and sound on/off (saved between launches)
+- Settings: light/dark theme and independent background-music and tap-sound volume/on-off controls (saved between launches)
 - Loading and error states, with a Retry button
 - Portrait (mobile) and landscape (tablet) layouts
 
